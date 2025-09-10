@@ -27,12 +27,41 @@ class SmolHtmlCleaner:
         Minify HTML output via ``minify_html``. Default True.
     minify_kwargs : dict, optional
         Extra args for ``minify_html.minify``. Default empty.
-    pre_parse_hooks : sequence of callables, optional
-        Functions ``(str) -> str`` applied before parsing.
-    post_clean_hooks : sequence of callables, optional
-        Functions ``(BeautifulSoup) -> BeautifulSoup`` applied after cleaning.
-    lxml_* : various, optional
-        Direct mapping to ``lxml.html.clean.Cleaner`` kwargs (e.g., ``lxml_comments``, ``lxml_style``).
+
+    lxml Cleaner parameters
+    ----------------------
+    meta : bool, optional
+        Remove meta tags. Default False.
+    page_structure : bool, optional
+        Remove page structure tags (html, head, body). Default False.
+    links : bool, optional
+        Remove link tags. Default True.
+    scripts : bool, optional
+        Remove script tags. Default False.
+    javascript : bool, optional
+        Remove JavaScript content. Default True.
+    comments : bool, optional
+        Remove comments. Default True.
+    style : bool, optional
+        Remove style tags. Default True.
+    processing_instructions : bool, optional
+        Remove processing instructions. Default True.
+    embedded : bool, optional
+        Remove embedded content (object, embed, applet). Default True.
+    frames : bool, optional
+        Remove frame/iframe tags. Default True.
+    forms : bool, optional
+        Remove form tags. Default True.
+    annoying_tags : bool, optional
+        Remove tags considered annoying (blink, marquee, etc). Default True.
+    kill_tags : set of str, optional
+        Additional tags to remove. Default None.
+    remove_unknown_tags : bool, optional
+        Remove unknown tags. Default True.
+    safe_attrs_only : bool, optional
+        Only keep safe attributes. Default True.
+    safe_attrs : set of str, optional
+        Set of safe attributes to keep. Default is a sensible set.
 
     Notes
     -----
