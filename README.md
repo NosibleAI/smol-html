@@ -1,3 +1,5 @@
+![Logo](https://github.com/NosibleAI/nosible-py/blob/main/docs/_static/readme.png?raw=true)
+
 # smol-html
 
 Small, dependable HTML cleaner/minifier with sensible defaults.
