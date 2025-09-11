@@ -1,0 +1,9 @@
+include README.md
+include LICENSE
+include smol.png
+
+# Exclude common cruft
+exclude .gitignore
+exclude .python-version
+prune .scratch
+global-exclude __pycache__ *.py[cod]

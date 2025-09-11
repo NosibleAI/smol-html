@@ -42,6 +42,14 @@ Issues = "https://github.com/NosibleAI/smol-html/issues"
 requires = ["hatchling>=1.0.0"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build]
+# Ensure project assets like the README image are included in builds
+include = [
+  "/README.md",
+  "/LICENSE",
+  "/smol.png",
+]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/smol_html"]
 
