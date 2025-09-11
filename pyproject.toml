@@ -1,6 +1,6 @@
 [project]
 name = "smol-html"
-version = "0.1.1"
+version = "0.1.2"
 description = "Small, dependable HTML cleaner/minifier with sensible defaults"
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9"
@@ -12,9 +12,10 @@ authors = [
 ]
 license = { text = "MIT" }
 dependencies = [
-  "beautifulsoup4>=4.13.5",
-  "lxml[html-clean]>=6.0.1",
-  "minify-html>=0.16.4",
+  "beautifulsoup4>=4.0.1",
+  "brotli>=0.5.2",
+  "lxml[html-clean]>=1.3.2",
+  "minify-html>=0.2.6",
 ]
 classifiers = [
   "Development Status :: 4 - Beta",

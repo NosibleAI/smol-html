@@ -1,4 +1,5 @@
-![Logo](https://github.com/NosibleAI/nosible-py/blob/main/docs/_static/readme.png?raw=true)
+![smol](smol.png)
+
 
 # smol-html
 
@@ -34,7 +35,7 @@ html = """
 
 # All constructor arguments are keyword-only and optional.
 cleaner = SmolHtmlCleaner()
-cleaned = cleaner.clean(raw_html=html)
+cleaned = cleaner.make_smol(raw_html=html)
 
 print(cleaned)
 ```
@@ -60,7 +61,7 @@ Minimal:
 from smol_html import SmolHtmlCleaner
 
 cleaner = SmolHtmlCleaner()
-out = cleaner.clean(raw_html="<p>Hi <!-- note --> <a href='x'>link</a></p>")
+out = cleaner.make_smol(raw_html="<p>Hi <!-- note --> <a href='x'>link</a></p>")
 ```
 
 Customize a few options:
@@ -74,7 +75,38 @@ cleaner = SmolHtmlCleaner(
     minify=True,
 )
 
-out = cleaner.clean(raw_html="<p>Hi</p>")
+out = cleaner.make_smol(raw_html="<p>Hi</p>")
+```
+
+## Compressed Bytes Output
+
+Produce compressed bytes using Brotli with `make_smol_bytes`
+
+
+```python
+from smol_html import SmolHtmlCleaner
+import brotli  # only needed if you want to decompress here in the example
+
+html = """
+<html>
+  <body>
+    <div>  Hello <span> world </span> </div>
+  </body>
+</html>
+"""
+
+cleaner = SmolHtmlCleaner()
+
+# Get compressed bytes (quality 11 is strong compression)
+compressed = cleaner.make_smol_bytes(raw_html=html, compression_level=11)
+
+# Example: decompress back to text to inspect (optional)
+decompressed = brotli.decompress(compressed).decode("utf-8")
+print(decompressed)
+
+# Or write compressed output directly to a file
+with open("page.html.br", "wb") as f:
+    f.write(compressed)
 ```
 
 ## Parameter Reference

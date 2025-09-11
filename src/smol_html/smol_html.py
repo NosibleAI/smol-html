@@ -6,6 +6,8 @@ from lxml import html as lxml_html
 from lxml.html.clean import Cleaner
 
 
+
+
 # -------------------------
 # Public API
 # -------------------------
@@ -146,7 +148,7 @@ class SmolHtmlCleaner:
     # -------------------------
 
 
-    def clean(self, *, raw_html: str | BeautifulSoup) -> str:
+    def make_smol(self, *, raw_html: str | BeautifulSoup) -> str:
         """Clean and optionally minify HTML input.
 
         The cleaning pipeline applies pre-parse hooks (on strings), prunes elements
@@ -187,6 +189,53 @@ class SmolHtmlCleaner:
         self._drop_empty_leaf_nodes(clean_soup)
 
         return str(clean_soup)
+
+    
+    def make_smol_bytes(self, *,
+        raw_html: str | BeautifulSoup,
+        compression_level: int = 5,
+    ) -> bytes:
+        """Return cleaned HTML as bytes, optionally Brotli-compressed.
+
+        If ``compression_level`` is 0, returns UTF-8 encoded bytes without compression.
+        For ``compression_level`` > 0, compresses the bytes using Brotli.
+
+        Parameters
+        ----------
+        raw_html : str or BeautifulSoup
+            Raw HTML to clean.
+        compression_level : int, optional
+            Brotli quality/level. 0 disables compression. Default 11.
+        **cleaner_kwargs : dict
+            Optional keyword args forwarded to ``SmolHtmlCleaner``.
+
+        Returns
+        -------
+        bytes
+            Cleaned (and possibly compressed) HTML as bytes.
+        """
+        html = self.make_smol(raw_html=raw_html)
+        data = html.encode("utf-8")
+
+        if compression_level <= 0:
+            return data
+
+        try:
+            import brotli as _brotli  # type: ignore
+        except Exception as exc:  # pragma: no cover - import-time dependency
+            raise RuntimeError(
+                "Brotli is required for compression. Install 'brotli' or 'brotlicffi', "
+                "or call with compression_level=0."
+            ) from exc
+
+        # Prefer TEXT mode if available for HTML content; fall back gracefully.
+        mode = getattr(_brotli, "MODE_TEXT", None)
+        if mode is None:
+            mode = getattr(_brotli, "BROTLI_MODE_TEXT", None)
+
+        if mode is not None:
+            return _brotli.compress(data, quality=int(compression_level), mode=mode)
+        return _brotli.compress(data, quality=int(compression_level))
 
     # -------------------------
     # Internal helpers
