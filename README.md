@@ -1,4 +1,4 @@
-![smol](smol.png)
+![smol](https://github.com/NosibleAI/smol-html/blob/main/smol.png?raw=true)
 
 
 # smol-html
@@ -9,7 +9,7 @@ Small, dependable HTML cleaner/minifier with sensible defaults.
 
 Nosible is a search engine, which means we need to store and process a very large number of webpages. To make this tractable, we strip out visual chrome and other non-essential components that don’t matter for downstream tasks (indexing, ranking, retrieval, and LLM pipelines) while preserving the important content and structure. This package cleans and minifies HTML, greatly reducing size on disk; combined with Brotli compression (by Google), the savings are even larger.
 
-![Cleaning impact on size](eval.png)
+![Cleaning impact on size](https://github.com/NosibleAI/smol-html/blob/main/eval.png?raw=true)
 
 ### 📦 Installation
 
