@@ -23,6 +23,15 @@ pip install smol-html
 uv pip install smol-html
 ```
 
+### Requirements
+
+- Python: 3.9
+- Dependencies:
+  - beautifulsoup4>=4.0.1
+  - brotli>=0.5.2
+  - lxml[html-clean]>=1.3.2
+  - minify-html>=0.2.6
+
 ## Quick Start
 
 Clean an HTML string (or page contents):
