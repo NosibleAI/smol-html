@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import base64
+
 import minify_html
 from bs4 import BeautifulSoup, Tag
 from lxml import html as lxml_html
@@ -190,6 +192,7 @@ class SmolHtmlCleaner:
     def make_smol_bytes(self, *,
         raw_html: str | BeautifulSoup,
         compression_level: int = 4,
+        base64_encode: bool = True,
     ) -> bytes:
         """Return cleaned HTML as bytes, optionally Brotli-compressed.
 
@@ -202,6 +205,8 @@ class SmolHtmlCleaner:
             Raw HTML to clean.
         compression_level : int, optional
             Brotli quality/level. 0 disables compression. Default 4.
+        base64_encode : bool, optional
+            Apply URL-safe base64 encoding to the compressed output. Default True.
 
         Returns
         -------
@@ -228,8 +233,13 @@ class SmolHtmlCleaner:
             mode = getattr(_brotli, "BROTLI_MODE_TEXT", None)
 
         if mode is not None:
-            return _brotli.compress(data, quality=int(compression_level), mode=mode)
-        return _brotli.compress(data, quality=int(compression_level))
+            compressed = _brotli.compress(data, quality=int(compression_level), mode=mode)
+        else:
+            compressed = _brotli.compress(data, quality=int(compression_level))
+
+        if base64_encode:
+            return base64.urlsafe_b64encode(compressed)
+        return compressed
 
     # -------------------------
     # Internal helpers

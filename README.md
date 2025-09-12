@@ -95,11 +95,17 @@ out = cleaner.make_smol(raw_html="<p>Hi</p>")
 
 ## Compressed Bytes Output
 
-Produce compressed bytes using Brotli with `make_smol_bytes`
+Produce compressed bytes using Brotli with `make_smol_bytes`.
 
+- By default, the compressed bytes are URL-safe Base64 encoded (`base64_encode=True`).
+- If you enable Base64, you must decode before Brotli-decompressing.
+- You can disable Base64 by passing `base64_encode=False` and decompress directly.
+
+Default (Base64-encoded) output:
 
 ```python
 from smol_html import SmolHtmlCleaner
+import base64
 import brotli  # only needed if you want to decompress here in the example
 
 html = """
@@ -115,13 +121,29 @@ cleaner = SmolHtmlCleaner()
 # Get compressed bytes (quality 11 is strong compression)
 compressed = cleaner.make_smol_bytes(raw_html=html, compression_level=11)
 
-# Example: decompress back to text to inspect (optional)
-decompressed = brotli.decompress(compressed).decode("utf-8")
+# Because Base64 is enabled by default, decode before decompressing
+decoded = base64.urlsafe_b64decode(compressed)
+decompressed = brotli.decompress(decoded).decode("utf-8")
 print(decompressed)
 
-# Or write compressed output directly to a file
-with open("page.html.br", "wb") as f:
+# Or write Base64-encoded compressed output directly to a file
+with open("page.html.br.b64", "wb") as f:
     f.write(compressed)
+```
+
+Disable Base64 and decompress directly:
+
+```python
+from smol_html import SmolHtmlCleaner
+import brotli
+
+cleaner = SmolHtmlCleaner()
+compressed_raw = cleaner.make_smol_bytes(
+    raw_html="<p>Hi</p>",
+    compression_level=11,
+    base64_encode=False,
+)
+print(brotli.decompress(compressed_raw).decode("utf-8"))
 ```
 
 ## Parameter Reference
@@ -183,3 +205,10 @@ To improve readability, the reference is split into two tables:
 | `remove_unknown_tags` | `bool` | `True` |
 | `safe_attrs_only` | `bool` | `True` |
 | `safe_attrs` | `set[str]` | curated set |
+
+### `make_smol_bytes` Options
+
+| Parameter | Type | Default |
+|---|---|---|
+| `compression_level` | `int` | `4` |
+| `base64_encode` | `bool` | `True` |
