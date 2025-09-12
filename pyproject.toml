@@ -1,6 +1,6 @@
 [project]
 name = "smol-html"
-version = "0.1.6"
+version = "0.1.7"
 description = "Small, dependable HTML cleaner/minifier with sensible defaults"
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9"

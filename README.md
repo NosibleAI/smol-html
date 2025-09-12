@@ -5,6 +5,21 @@
 
 Small, dependable HTML cleaner/minifier with sensible defaults.
 
+---
+
+## Credits
+
+This package is built on top of excellent open-source projects:
+
+- [**minify-html**](https://github.com/wilsonzlin/minify-html) (MIT License) – High-performance HTML minifier.
+- [**lxml**](https://lxml.de/) (BSD-like License) – Fast and feature-rich XML/HTML parsing and cleaning.
+- [**BeautifulSoup4**](https://www.crummy.com/software/BeautifulSoup/) (MIT License) – Python library for parsing and navigating HTML/XML.
+- [**Brotli**](https://github.com/google/brotli) (MIT License) – Compression algorithm developed by Google.
+
+We are grateful to the maintainers and contributors of these projects — `smol-html` wouldn’t be possible without their work.
+
+---
+
 ## Motivation
 
 Nosible is a search engine, which means we need to store and process a very large number of webpages. To make this tractable, we strip out visual chrome and other non-essential components that don’t matter for downstream tasks (indexing, ranking, retrieval, and LLM pipelines) while preserving the important content and structure. This package cleans and minifies HTML, greatly reducing size on disk; combined with Brotli compression (by Google), the savings are even larger.
