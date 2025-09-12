@@ -189,7 +189,7 @@ class SmolHtmlCleaner:
 
     def make_smol_bytes(self, *,
         raw_html: str | BeautifulSoup,
-        compression_level: int = 5,
+        compression_level: int = 4,
     ) -> bytes:
         """Return cleaned HTML as bytes, optionally Brotli-compressed.
 
@@ -201,9 +201,7 @@ class SmolHtmlCleaner:
         raw_html : str or BeautifulSoup
             Raw HTML to clean.
         compression_level : int, optional
-            Brotli quality/level. 0 disables compression. Default 11.
-        **cleaner_kwargs : dict
-            Optional keyword args forwarded to ``SmolHtmlCleaner``.
+            Brotli quality/level. 0 disables compression. Default 4.
 
         Returns
         -------
