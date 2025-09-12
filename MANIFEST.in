@@ -1,6 +1,7 @@
 include README.md
 include LICENSE
 include smol.png
+include eval.png
 
 # Exclude common cruft
 exclude .gitignore

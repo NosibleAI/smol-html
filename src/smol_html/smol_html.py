@@ -6,8 +6,6 @@ from lxml import html as lxml_html
 from lxml.html.clean import Cleaner
 
 
-
-
 # -------------------------
 # Public API
 # -------------------------
@@ -147,7 +145,6 @@ class SmolHtmlCleaner:
     # User-friendly entry points
     # -------------------------
 
-
     def make_smol(self, *, raw_html: str | BeautifulSoup) -> str:
         """Clean and optionally minify HTML input.
 
@@ -190,7 +187,6 @@ class SmolHtmlCleaner:
 
         return str(clean_soup)
 
-    
     def make_smol_bytes(self, *,
         raw_html: str | BeautifulSoup,
         compression_level: int = 5,
